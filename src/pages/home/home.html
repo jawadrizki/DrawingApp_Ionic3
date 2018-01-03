@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar color="lightBlue">
+    <ion-title>Learn to draw</ion-title>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="categorie" color="lightBlue" >
+      <ion-segment-button (click)="OnChangeCategorie()" value="1">
+        Persons
+      </ion-segment-button>
+      <ion-segment-button (click)="OnChangeCategorie()" value="2">
+        Animals
+      </ion-segment-button>
+      <ion-segment-button (click)="OnChangeCategorie()" value="3">
+        Fruits
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="background: #E1F5FE" >
+
+  <div [ngSwitch]="categorie">
+    <ion-grid *ngSwitchCase="categorie">
+      <ion-row>
+        <ion-col col-6 col-md-4 col-xl-3 *ngFor="let item of data">
+          <img style="border: dashed 2px black" (click)="view(categorie,item)"  src="sources/{{categorie}}/{{item.name}}/{{item.thumb}}">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+</ion-content>

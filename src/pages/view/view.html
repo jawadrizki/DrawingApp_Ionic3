@@ -1,0 +1,92 @@
+<ion-header [hidden]="checkHeader()">
+
+  <ion-navbar hideBackButton style="position:absolute;font-size: 20px;color: white"  color="lightBlue">
+    <ion-icon name="home" style="font-size: 30px;padding: 10px;" (click)="goToHome()"></ion-icon>    Learn to draw <strong>{{draw.name}}</strong>
+  </ion-navbar>
+</ion-header>
+<ion-content no-bounce>
+
+  <ion-slides>
+    <ion-slide *ngFor="let item of draw.images">
+
+      <div>
+        <img class="image" src="sources/{{cat}}/{{draw.name}}/{{item.step}}.{{item.ext}}">
+      </div>
+      <ion-grid>
+
+        <ion-row style="border-top: 1px solid black; position: absolute;bottom: 0;width: 100%; background: black">
+          <ion-col>
+          <button ion-button color="black" full (click)="previous()" ><ion-icon style="font-size: 30px"  name="arrow-dropleft-circle"></ion-icon></button>
+            </ion-col>
+          <ion-col>
+            <span style="color: white;margin-top: 7px ">Step {{item.step - 1}}/{{draw.images.length}}</span>
+          </ion-col>
+          <ion-col>
+
+            <button ion-button color="black" full (click)="next()"><ion-icon style="font-size: 30px"  name="arrow-dropright-circle"></ion-icon></button>
+          </ion-col>
+
+        </ion-row>
+        </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <div>
+        <img class="image" src="sources/{{cat}}/{{draw.name}}/{{draw.thumb}}">
+      </div>
+      <ion-grid>
+
+        <ion-row style="border-top: 1px solid black; position: absolute;bottom: 0;width: 100%; background: black">
+          <ion-col>
+            <button ion-button color="black" full (click)="previous()" ><ion-icon style="font-size: 30px"  name="arrow-dropleft-circle"></ion-icon></button>
+          </ion-col>
+          <ion-col>
+
+            <button ion-button color="black" full (click)="next()" icon-end>Practice <ion-icon style="font-size: 30px"  name="md-brush"></ion-icon></button>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+
+
+      <!--Draw Practice Start -->
+      <button [hidden]="!showBars" style="position: absolute;top: 0px; right: 0"  (click)="hidebars()" color="dark" ion-button icon-only><ion-icon name="md-arrow-back"></ion-icon></button>
+      <ion-toolbar [hidden]="showBars" style="position: absolute;top: 0px;" id="top-toolbar">
+      <ion-buttons left>
+        <button *ngFor="let colour of availableColours" icon-only ion-button (click)="changeColour(colour)">
+          <ion-icon [style.color]="colour" name="brush"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-buttons right>
+        <button style="border: 1px solid #cecece;" ion-button icon-only style.color="#fff" (click)="changeColour('#fff')">
+          <ion-icon style="color: #fff;" name="square"></ion-icon>
+        </button>
+
+        <button  (click)="hidebars()" color="dark" ion-button icon-only><ion-icon name="md-arrow-forward"></ion-icon></button>
+      </ion-buttons>
+      </ion-toolbar>
+
+      <canvas #myCanvas id="myCanvas" (touchstart)="handleStart($event)" (touchmove)="handleMove($event)"></canvas>
+
+
+      <ion-toolbar [hidden]="showBars" style="position: absolute;bottom: 0;" id="bottom-toolbar">
+        <ion-buttons left>
+          <button  (click)="previous()" color="dark" ion-button icon-only><ion-icon name="md-arrow-round-back"></ion-icon></button>
+          <button color="dark" ion-button icon-only (click)="showConfirmClear()"><ion-icon name="trash"></ion-icon></button>
+        </ion-buttons>
+        <ion-buttons right>
+          <button color="dark" ion-button icon-only (click)="changeSize(2)"><ion-icon style="font-size: 0.25em;" name="radio-button-on"></ion-icon></button>
+          <button color="dark" ion-button icon-only (click)="changeSize(5)"><ion-icon style="font-size: 0.5em;" name="radio-button-on"></ion-icon></button>
+          <button color="dark" ion-button icon-only (click)="changeSize(10)"><ion-icon style="font-size: 1em;" name="radio-button-on"></ion-icon></button>
+          <button color="dark" ion-button icon-only (click)="changeSize(20)"><ion-icon style="font-size: 1.5em;" name="radio-button-on"></ion-icon></button>
+          <button color="dark" ion-button icon-only (click)="changeSize(50)"><ion-icon style="font-size: 2em;" name="radio-button-on"></ion-icon></button>
+          <button color="dark" ion-button icon-only (click)="changeSize(200)"><ion-icon style="font-size: 3em;" name="radio-button-on"></ion-icon></button>
+        </ion-buttons>
+      </ion-toolbar>
+      <!--Draw Practice End -->
+
+    </ion-slide>
+  </ion-slides>
+
+</ion-content>
